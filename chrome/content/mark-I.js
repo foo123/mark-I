@@ -40,7 +40,7 @@ if ( !MarkI )
             {
                 let parser = Components
                                 .classes[PARSER_UTILS]
-                                .getService(Ci.nsIParserUtils);
+                                .getService(Components.interfaces.nsIParserUtils);
                 if ("parseFragment" in parser)
                     return parser.parseFragment(html, allowStyle ? parser.SanitizerAllowStyle : 0,
                                                 !!isXML, baseURI, doc.documentElement);
@@ -83,7 +83,14 @@ if ( !MarkI )
                 load, next
             ;
             load = function( url, cb ) {
-                var done = 0, resource;
+                var done = 0, resource, ID = null, isInlined = false, mimeType = "text/javascript";
+                if ( url.push && url.pop )
+                {
+                    mimeType = url[1] || "text/javascript";
+                    ID = url[2] || null;
+                    url = url[0];
+                    isInlined = true;
+                }
                 if ( rel.test( url ) ) 
                 {
                     // http://stackoverflow.com/a/14781678/3591273
@@ -94,17 +101,27 @@ if ( !MarkI )
                 if ( 'script' === resourceType )
                 {
                     resource = document.createElement('script');
-                    resource.type = 'text/javascript'; resource.language = 'javascript';
-                    resource.onload = resource.onreadystatechange = function( ) {
-                        if (!done && (!resource.readyState || resource.readyState == 'loaded' || resource.readyState == 'complete'))
-                        {
-                            done = 1; resource.onload = resource.onreadystatechange = null;
-                            cb( );
-                            //head.removeChild( resource ); resource = null;
-                        }
+                    if ( isInlined )
+                    {
+                        resource.type = mimeType; 
+                        if ( ID ) resoure.id = id;
+                        resource.innerHTML = '' + MarkI.readURI( url );
+                        cb( );
                     }
-                    // load it
-                    resource.src = url; head.appendChild( resource );
+                    else
+                    {
+                        resource.type = 'text/javascript'; resource.language = 'javascript';
+                        resource.onload = resource.onreadystatechange = function( ) {
+                            if (!done && (!resource.readyState || resource.readyState == 'loaded' || resource.readyState == 'complete'))
+                            {
+                                done = 1; resource.onload = resource.onreadystatechange = null;
+                                cb( );
+                                //head.removeChild( resource ); resource = null;
+                            }
+                        }
+                        // load it
+                        resource.src = url; head.appendChild( resource );
+                    }
                 }
                 else if ( 'style' === resourceType )
                 {
@@ -135,6 +152,32 @@ if ( !MarkI )
             return el;
         }
         
+        // Utility function that synchronously reads local resource from the given
+        // `uri` and returns content string.
+        ,readURI: function( uri ) {
+            let ioservice = Components
+                            .classes['@mozilla.org/network/io-service;1']
+                            .getService(Components.interfaces.nsIIOService);
+            let channel = ioservice.newChannel(uri, 'UTF-8', null);
+            let stream = channel.open();
+
+            let cstream = Components.classes['@mozilla.org/intl/converter-input-stream;1']
+                            .createInstance(Components.interfaces.nsIConverterInputStream);
+            cstream.init(stream, 'UTF-8', 0, 0);
+
+            let str = {};
+            let data = '';
+            let read = 0;
+            do {
+                read = cstream.readString(0xffffffff, str);
+                data += str.value;
+            } while (read != 0);
+
+            cstream.close();
+
+            return data;
+        }
+        
         /*,readFile: function( fileURL ) {
             var ioService = Components.classes["@mozilla.org/network/io-service;1"]
                 .getService(Components.interfaces.nsIIOService);
@@ -155,23 +198,10 @@ if ( !MarkI )
         ,makePage: function( document, title, callback ) {
             MarkI.empty( document.body );
             MarkI.addMeta( document, {
-                title: title.replace('<', '&lt;').replace('>', '&gt;')
+                title: title.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/^[#* ]+/g, '')
                 ,charset: "UTF-8"
                 ,viewport: 'width=device-width, initial-scale=1'
             });
-            
-            document.body.innerHTML = '\
-<div class="wrapper">\
-<div id="in">\
-    <textarea id="code"></textarea>\
-</div>\
-<div id="out"></div>\
-<div id="controls">\
-    <button id="btn-toggle" class="button toggle-button" title="Toggle Editor">&nbsp;</button>\
-    <button id="btn-save" class="button save-button" title="Save File">&nbsp;</button>\
-</div>\
-</div>\
-            ';
             
             MarkI.loadResources(document, [
                 "resource://mkIresources/codemirror/lib/codemirror.min.css"
@@ -179,7 +209,8 @@ if ( !MarkI )
             ], {type: 'style'});
             
             MarkI.loadResources(document, [
-                "resource://mkIresources/markdown/marked.min.js"
+                "resource://mkIresources/templates/Contemplate.min.js"
+                ,"resource://mkIresources/markdown/marked.min.js"
                 ,"resource://mkIresources/markdown/highlight.pack.js"
                 ,"resource://mkIresources/codemirror/lib/codemirror.min.js"
                 ,"resource://mkIresources/codemirror/modes/xml.js"
@@ -209,7 +240,11 @@ if ( !MarkI )
                     textContent.substr(0, pos>-1 ? Math.min(pos, 50) : 50),
                     function( ) {
                         // https://developer.mozilla.org/en-US/docs/Web/API/Window.postMessage
-                        scope.postMessage({message: "render", data: textContent}, "*");
+                        scope.postMessage({
+                            message: "render" 
+                            ,data: textContent
+                            ,tpl: MarkI.readURI("resource://mkIresources/templates/viewer.html")
+                        }, "*");
                 });
             }
         }
