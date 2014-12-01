@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<RDF xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:em="http://www.mozilla.org/2004/em-rdf#">
+    <Description about="urn:mozilla:install-manifest">
+        <em:id>markI@foo123.foo</em:id>
+        <em:version>0.2</em:version>
+        <em:type>2</em:type>
+
+        <em:name>Mark I</em:name>
+        <em:creator>foo123</em:creator>
+        <em:description>Github-flavored markdown viewer and editor.</em:description>
+        <em:iconURL>chrome://mark-I/skin/icon32.png</em:iconURL>
+
+        <!-- Firefox -->
+        <em:targetApplication>
+            <Description>
+                <em:id>{ec8030f7-c20a-464f-9b0e-13a3a9e97384}</em:id>
+                <em:minVersion>4.0</em:minVersion>
+                <em:maxVersion>30.*</em:maxVersion>
+            </Description>
+        </em:targetApplication>
+
+        <em:localized>
+            <Description>
+                <em:locale>en-US</em:locale>
+                <em:name>Mark I</em:name>
+                <em:description>Github-flavored markdown viewer and editor.</em:description>
+                <em:creator>foo123</em:creator>
+                <em:translator>foo123</em:translator>
+            </Description>
+        </em:localized>
+    </Description>
+</RDF>

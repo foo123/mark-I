@@ -1,0 +1,472 @@
+/*
+    * Modified and lightened version of Twitter Bootstrap, by Thiht
+    * Originally licensed under the Apache License v2.0
+    * http://www.apache.org/licenses/LICENSE-2.0
+*/
+
+body {
+    color: #333;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    line-height: 20px;
+    margin: 0 auto;
+    padding-top: 30px;
+    width: 940px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: inherit;
+    font-family: inherit;
+    line-height: 1;
+    margin: 10px 0;
+    text-rendering: optimizelegibility;
+}
+
+h1, h2, h3 {
+    line-height: 40px;
+}
+
+h4, h5, h6 {
+    line-height: 20px;
+}
+
+h1 {
+    font-size: 36px;
+}
+
+h2 {
+    font-size: 30px;
+}
+
+h3 {
+    font-size: 24px;
+}
+
+h4 {
+    font-size: 18px;
+}
+
+h5 {
+    font-size: 14px;
+}
+
+h6 {
+    font-size: 12px;
+}
+
+p {
+    margin: 0 0 10px;
+}
+
+a {
+    color: #08c;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #005580;
+    text-decoration: underline;
+}
+
+blockquote {
+    border-left: 5px solid #ccc;
+    margin: 0 0 20px;
+    padding: 0 0 0 15px;
+}
+
+blockquote p {
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 25px;
+    margin-bottom: 0;
+}
+
+blockquote:before, blockquote:after {
+    content: "";
+}
+
+li {
+    line-height: 20px;
+}
+
+code, pre {
+    border-radius: 3px;
+    color: #333;
+    font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
+    font-size: 12px;
+    padding: 0 3px 2px;
+}
+
+code {
+    background-color: #f7f7f9;
+    border: 1px solid #e1e1e8;
+    color: #444;
+    padding: 2px 4px;
+}
+
+pre {
+    background-color: #f5f5f5;
+    border: 1px solid rgba(0,0,0,0.15);
+    border-radius: 4px;
+    display: block;
+    font-size: 13px;
+    line-height: 20px;
+    margin: 0 0 10px;
+    padding: 9.5px;
+    white-space: pre-wrap;
+    word-break: break-all;
+    word-wrap: break-word;
+}
+
+pre code {
+    background-color: transparent;
+    border: 0;
+    color: inherit;
+    padding: 0;
+}
+
+hr {
+    border: 0;
+    border-bottom: 1px solid #eee;
+    border-top: 1px solid #ddd;
+    margin: 20px 0;
+}
+
+abbr[title] {
+    border-bottom: 1px dotted #999;
+    cursor: help;
+}
+
+table {
+    max-width: 100%;
+    background-color: transparent;
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+table th,
+table td {
+    padding: 8px;
+    line-height: 20px;
+    text-align: left;
+    vertical-align: top;
+    border-top: 1px solid #ddd;
+}
+
+table thead th {
+    vertical-align: bottom;
+}
+
+table thead:first-child tr:first-child th,
+table thead:first-child tr:first-child td {
+    border-top: 0;
+}
+
+table tbody + tbody {
+  border-top: 2px solid #ddd;
+}
+
+table table {
+    background-color: #fff;
+}
+
+/*
+
+Original style from softwaremaniacs.org (c) Ivan Sagalaev <Maniac@SoftwareManiacs.Org>
+
+*/
+
+pre code {
+  display: block; padding: 0.5em;
+  background: #F0F0F0;
+}
+
+pre code,
+pre .subst,
+pre .tag .title,
+pre .lisp .title,
+pre .clojure .built_in,
+pre .nginx .title {
+  color: black;
+}
+
+pre .string,
+pre .title,
+pre .constant,
+pre .parent,
+pre .tag .value,
+pre .rules .value,
+pre .rules .value .number,
+pre .preprocessor,
+pre .ruby .symbol,
+pre .ruby .symbol .string,
+pre .aggregate,
+pre .template_tag,
+pre .django .variable,
+pre .smalltalk .class,
+pre .addition,
+pre .flow,
+pre .stream,
+pre .bash .variable,
+pre .apache .tag,
+pre .apache .cbracket,
+pre .tex .command,
+pre .tex .special,
+pre .erlang_repl .function_or_atom,
+pre .markdown .header {
+  color: #800;
+}
+
+pre .comment,
+pre .annotation,
+pre .template_comment,
+pre .diff .header,
+pre .chunk,
+pre .markdown .blockquote {
+  color: #888;
+}
+
+pre .number,
+pre .date,
+pre .regexp,
+pre .literal,
+pre .smalltalk .symbol,
+pre .smalltalk .char,
+pre .go .constant,
+pre .change,
+pre .markdown .bullet,
+pre .markdown .link_url {
+  color: #080;
+}
+
+pre .label,
+pre .javadoc,
+pre .ruby .string,
+pre .decorator,
+pre .filter .argument,
+pre .localvars,
+pre .array,
+pre .attr_selector,
+pre .important,
+pre .pseudo,
+pre .pi,
+pre .doctype,
+pre .deletion,
+pre .envvar,
+pre .shebang,
+pre .apache .sqbracket,
+pre .nginx .built_in,
+pre .tex .formula,
+pre .erlang_repl .reserved,
+pre .prompt,
+pre .markdown .link_label,
+pre .vhdl .attribute,
+pre .clojure .attribute,
+pre .coffeescript .property {
+  color: #88F
+}
+
+pre .keyword,
+pre .id,
+pre .phpdoc,
+pre .title,
+pre .built_in,
+pre .aggregate,
+pre .css .tag,
+pre .javadoctag,
+pre .phpdoc,
+pre .yardoctag,
+pre .smalltalk .class,
+pre .winutils,
+pre .bash .variable,
+pre .apache .tag,
+pre .go .typename,
+pre .tex .command,
+pre .markdown .strong,
+pre .request,
+pre .status {
+  font-weight: bold;
+}
+
+pre .markdown .emphasis,
+pre .comment {
+  font-style: italic;
+}
+
+pre .nginx .built_in {
+  font-weight: normal;
+}
+
+pre .coffeescript .javascript,
+pre .javascript .xml,
+pre .tex .formula,
+pre .xml .javascript,
+pre .xml .vbscript,
+pre .xml .css,
+pre .xml .cdata {
+  opacity: 0.5;
+}
+
+.wrapper
+{
+    position: relative;
+    display: block;
+    padding: 0; margin: 0;
+    width: 100%;
+}
+
+.button 
+{
+    display: inline-block;
+    vertical-align: middle;
+    position:relative;
+    margin: 0; padding: 0;
+    margin-right: 5px;
+    width: 32px;
+    height: 32px;
+    cursor: pointer !important;
+    outline: none;
+    border: 0;
+    overflow: hidden;
+}
+.button:active,
+.button:focus,
+.button:hover 
+{
+    border: 0;
+    outline: none;
+}
+.button.toggle-button 
+{
+    background: url(editor-icon.png) no-repeat 0 0;
+}
+.button.save-button 
+{
+    background: url(save-icon.png) no-repeat 0 0;
+}
+
+#controls
+{
+    position: fixed;
+    padding: 0; margin: 0;
+    top: 12px;
+    right: 15px;
+    display: none;
+    z-index: -1;
+    text-align: right;
+}
+
+#out ~ #controls:hover,
+#out:hover ~ #controls:hover,
+#out:hover ~ #controls
+{
+    z-index: 10;
+    display: block;
+}
+#out ~ #controls:hover,
+#out:hover ~ #controls:hover
+{
+    opacity: 1;
+}
+#out:hover ~ #controls
+{
+    opacity: 0.6;
+}
+
+.CodeMirror pre{
+  line-height: 14px;
+}
+#in, .CodeMirror{
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 50%;
+  overflow: auto;
+  font-size: 12px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+.CodeMirror-scroll {
+  height: 100%;
+  min-height: 100%;
+}
+
+#out{
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 50%;
+  bottom: 0;
+  overflow: auto;
+  padding: 10px;
+  padding-left: 20px;
+  color: inherit;
+    font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+@media screen and (max-width: 1024px) {
+  #in {
+    display: none;
+  }
+  #out {
+    left: 0;
+    padding-left: 10px;
+  }
+}
+
+.view #in {
+  display: none;
+}
+.view #out {
+  left: 0;
+  padding-left: 10px;
+}
+
+a{ color: #0645ad; text-decoration:none;}
+a:visited{ color: #0b0080; }
+a:hover{ color: #06e; }
+a:active{ color:#faa700; }
+a:focus{ outline: thin dotted; }
+a:hover, a:active{ outline: 0; }
+
+p{margin:1em 0;}
+
+img{max-width:100%;}
+
+h1,h2,h3,h4,h5,h6{font-weight:normal;color:#111;line-height:1em;}
+h4,h5,h6{ font-weight: bold; }
+h1{ font-size:2.5em; }
+h2{ font-size:2em; border-bottom:1px solid silver; padding-bottom: 5px; }
+h3{ font-size:1.5em; }
+h4{ font-size:1.2em; }
+h5{ font-size:1em; }
+h6{ font-size:0.9em; }
+
+blockquote{color:#666666;margin:0;padding-left: 3em;border-left: 0.5em #EEE solid;}
+hr { display: block; height: 2px; border: 0; border-top: 1px solid #aaa;border-bottom: 1px solid #eee; margin: 1em 0; padding: 0; }
+
+pre, code{
+  color: #000;
+  font-family: monospace;
+  font-size: 0.88em;
+  border-radius:3px;
+  background-color: #F8F8F8;
+  border: 1px solid #CCC;
+}
+pre { white-space: pre; white-space: pre-wrap; word-wrap: break-word; padding: 5px;}
+pre code { border: 0px !important; background: transparent !important; line-height: 1.3em; }
+code { padding: 0 3px 0 3px; }
+sub, sup { font-size: 75%; line-height: 0; position: relative; vertical-align: baseline; }
+sup { top: -0.5em; }
+sub { bottom: -0.25em; }
+ul, ol { margin: 1em 0; padding: 0 0 0 2em; }
+li p:last-child { margin:0 }
+dd { margin: 0 0 0 2em; }
+img { border: 0; -ms-interpolation-mode: bicubic; vertical-align: middle; }
+table { border-collapse: collapse; border-spacing: 0; }
+td, th { vertical-align: top; padding: 4px 10px; border: 1px solid #bbb; }
+tr:nth-child(even) td, tr:nth-child(even) th { background: #eee; }
