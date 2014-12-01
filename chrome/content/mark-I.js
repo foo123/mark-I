@@ -83,14 +83,7 @@ if ( !MarkI )
                 load, next
             ;
             load = function( url, cb ) {
-                var done = 0, resource, SRC = 'src', isInline = false, mimeType = "text/javascript", ID;
-                if ( url.push )
-                {
-                    mimeType = url[1] || "text/javascript";
-                    ID = url[2] || null;
-                    url = url[0];
-                    isInline = true;
-                }
+                var done = 0, resource;
                 if ( rel.test( url ) ) 
                 {
                     // http://stackoverflow.com/a/14781678/3591273
@@ -101,35 +94,24 @@ if ( !MarkI )
                 if ( 'script' === resourceType )
                 {
                     resource = document.createElement('script');
-                    if ( isInline )
-                    {
-                        resource.type = mimeType;
-                        if ( ID ) resource.id = ID;
-                        resource.innerHTML = MarkI.readFile( url );
-                    }
-                    else
-                    {
-                        resource.type = 'text/javascript'; resource.language = 'javascript';
-                        SRC = 'src';
-                        resource.onload = resource.onreadystatechange = function( ) {
-                            if (!done && (!resource.readyState || resource.readyState == 'loaded' || resource.readyState == 'complete'))
-                            {
-                                done = 1; resource.onload = resource.onreadystatechange = null;
-                                cb( );
-                                //head.removeChild( resource ); resource = null;
-                            }
+                    resource.type = 'text/javascript'; resource.language = 'javascript';
+                    resource.onload = resource.onreadystatechange = function( ) {
+                        if (!done && (!resource.readyState || resource.readyState == 'loaded' || resource.readyState == 'complete'))
+                        {
+                            done = 1; resource.onload = resource.onreadystatechange = null;
+                            cb( );
+                            //head.removeChild( resource ); resource = null;
                         }
-                        // load it
-                        resource[SRC] = url; head.appendChild( resource );
                     }
+                    // load it
+                    resource.src = url; head.appendChild( resource );
                 }
                 else if ( 'style' === resourceType )
                 {
                     resource = document.createElement('link');
                     resource.type = 'text/css'; resource.rel = 'stylesheet';
-                    SRC = 'href';
                     // load it
-                    resource[SRC] = url; head.appendChild( resource );
+                    resource.href = url; head.appendChild( resource );
                     cb( );
                 }
                 else 
@@ -192,20 +174,18 @@ if ( !MarkI )
             ';
             
             MarkI.loadResources(document, [
-                "resource://mkIresources/highlight/codemirror/lib/codemirror.min.css"
+                "resource://mkIresources/codemirror/lib/codemirror.min.css"
                 ,"resource://mkIskin/mark-I.css"
             ], {type: 'style'});
             
             MarkI.loadResources(document, [
-                //"resource://mkIresources/templates/Contemplate.min.js"
                 "resource://mkIresources/markdown/marked.min.js"
-                ,"resource://mkIresources/highlight/highlight.pack.js"
-                ,"resource://mkIresources/highlight/codemirror/lib/codemirror.min.js"
-                ,"resource://mkIresources/highlight/codemirror/xml/xml.js"
-                ,"resource://mkIresources/highlight/codemirror/markdown/markdown.js"
-                ,"resource://mkIresources/highlight/codemirror/gfm/gfm.js"
-                ,"resource://mkIresources/highlight/codemirror/javascript/javascript.js"
-                //,"resource://mkIresources/highlight/codemirror_grammar.js"
+                ,"resource://mkIresources/markdown/highlight.pack.js"
+                ,"resource://mkIresources/codemirror/lib/codemirror.min.js"
+                ,"resource://mkIresources/codemirror/modes/xml.js"
+                ,"resource://mkIresources/codemirror/modes/markdown.js"
+                ,"resource://mkIresources/codemirror/modes/gfm.js"
+                ,"resource://mkIresources/codemirror/modes/javascript.js"
                 ,"resource://mkIresources/viewer.js"
             ], {type: 'script', callback: callback});
         }

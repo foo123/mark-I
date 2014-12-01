@@ -1,4 +1,4 @@
-!function( window, /*Contemplate,*/ marked, hljs, CodeMirror ) {
+!function( window, marked, hljs, CodeMirror ) {
     "use strict";
     
     var URL = window.URL || window.webkitURL || window.mozURL || window.msURL,
@@ -111,4 +111,4 @@
         toggleEditor( false );
     }, false);
     
-}(window, /*Contemplate,*/ marked, hljs, CodeMirror);
+}(window, marked, hljs, CodeMirror);
